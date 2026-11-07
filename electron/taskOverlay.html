@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JAYRA Live Task HUD</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        user-select: none;
+      }
+      .panel {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(11, 14, 22, 0.94);
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 243, 255, 0.12);
+        backdrop-filter: blur(16px);
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        -webkit-app-region: drag;
+        cursor: grab;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #00f3ff;
+        box-shadow: 0 0 8px #00f3ff;
+        animation: pulse 1.8s infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+      }
+      .badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #00f3ff;
+      }
+      .status-pill {
+        font-size: 10px;
+        font-family: monospace;
+        padding: 2px 7px;
+        border-radius: 6px;
+        background: rgba(0, 243, 255, 0.15);
+        color: #38bdf8;
+        border: 1px solid rgba(0, 243, 255, 0.3);
+      }
+      .controls-top {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        -webkit-app-region: no-drag;
+      }
+      .icon-btn {
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .icon-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #f1f5f9;
+      }
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .goal-text {
+        font-size: 13px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.35;
+      }
+      .current-status {
+        font-size: 11px;
+        color: #94a3b8;
+        line-height: 1.4;
+      }
+      .plan-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 11px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        max-height: 90px;
+        overflow-y: auto;
+      }
+      .plan-step {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #cbd5e1;
+      }
+      .step-status {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+      .step-done { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+      .step-active { background: rgba(0, 243, 255, 0.25); color: #00f3ff; animation: pulse 1.2s infinite; }
+      .step-pending { background: rgba(255, 255, 255, 0.08); color: #64748b; }
+      .actions-log {
+        font-family: monospace;
+        font-size: 10px;
+        color: #64748b;
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 6px;
+        padding: 6px 8px;
+        max-height: 50px;
+        overflow-y: auto;
+        word-break: break-all;
+      }
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        -webkit-app-region: no-drag;
+      }
+      .btn {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        color: #e2e8f0;
+        transition: all 0.15s ease;
+      }
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .btn-stop {
+        border-color: rgba(239, 68, 68, 0.35);
+        color: #f87171;
+      }
+      .btn-stop:hover {
+        background: rgba(239, 68, 68, 0.2);
+      }
+      .empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #64748b;
+        font-size: 12px;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="header">
+        <div class="brand">
+          <div class="pulse-dot" id="pulseDot"></div>
+          <span class="badge">JAYRA TASK HUD</span>
+          <span class="status-pill" id="statusPill">Idle</span>
+        </div>
+        <div class="controls-top">
+          <button class="icon-btn" id="btnClose" title="Close Overlay">✕</button>
+        </div>
+      </div>
+
+      <div class="content" id="contentArea">
+        <div class="empty-state" id="emptyState">No active background tasks</div>
+        <div id="activeTaskArea" style="display: none; flex-direction: column; gap: 8px;">
+          <div class="goal-text" id="goalText">Working on autonomous task...</div>
+          <div class="current-status" id="currentStatusText">Initializing plan...</div>
+          <div class="plan-box" id="planBox" style="display: none;"></div>
+          <div class="actions-log" id="actionsLog" style="display: none;"></div>
+        </div>
+      </div>
+
+      <div class="footer" id="footerControls" style="display: none;">
+        <span id="stepCount" style="font-size: 10px; font-family: monospace; color: #64748b;">Step 0</span>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn" id="btnPause">Pause</button>
+          <button class="btn btn-stop" id="btnStop">Stop</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentTaskId = null;
+      let currentState = "idle";
+
+      function updateTask(task) {
+        if (!task || task.state === "completed" || task.state === "failed" || task.state === "cancelled") {
+          document.getElementById('statusPill').textContent = task ? task.state.toUpperCase() : "IDLE";
+          if (task && task.state === "completed") {
+            document.getElementById('pulseDot').style.background = "#10b981";
+            document.getElementById('pulseDot').style.boxShadow = "0 0 8px #10b981";
+          } else if (task && (task.state === "failed" || task.state === "cancelled")) {
+            document.getElementById('pulseDot').style.background = "#ef4444";
+            document.getElementById('pulseDot').style.boxShadow = "0 0 8px #ef4444";
+          }
+          setTimeout(() => {
+            document.getElementById('emptyState').style.display = 'flex';
+            document.getElementById('activeTaskArea').style.display = 'none';
+            document.getElementById('footerControls').style.display = 'none';
+          }, 3500);
+          return;
+        }
+
+        currentTaskId = task.id;
+        currentState = task.state;
+
+        document.getElementById('emptyState').style.display = 'none';
+        document.getElementById('activeTaskArea').style.display = 'flex';
+        document.getElementById('footerControls').style.display = 'flex';
+
+        document.getElementById('statusPill').textContent = task.state.toUpperCase();
+        document.getElementById('goalText').textContent = task.goal || "Autonomous Task";
+        document.getElementById('currentStatusText').textContent = task.currentStatus || "Executing steps...";
+
+        // Pulse dot color by state
+        const dot = document.getElementById('pulseDot');
+        if (task.state === "running" || task.state === "planning") {
+          dot.style.background = "#00f3ff";
+          dot.style.boxShadow = "0 0 8px #00f3ff";
+        } else if (task.state === "paused" || task.state.startsWith("waiting")) {
+          dot.style.background = "#f59e0b";
+          dot.style.boxShadow = "0 0 8px #f59e0b";
+        }
+
+        // Render plan steps
+        const planBox = document.getElementById('planBox');
+        if (task.plan && Array.isArray(task.plan.steps) && task.plan.steps.length > 0) {
+          planBox.style.display = 'flex';
+          planBox.innerHTML = task.plan.steps.map((st, i) => {
+            const statusClass = st.status === 'done' ? 'step-done' : (st.status === 'active' ? 'step-active' : 'step-pending');
+            const symbol = st.status === 'done' ? '✓' : (st.status === 'active' ? '▶' : (i + 1));
+            return `<div class="plan-step"><div class="step-status \${statusClass}">\${symbol}</div><span style="font-size:11px;">\${st.text}</span></div>`;
+          }).join('');
+        } else {
+          planBox.style.display = 'none';
+        }
+
+        // Render recent actions
+        const actionsLog = document.getElementById('actionsLog');
+        if (Array.isArray(task.actions) && task.actions.length > 0) {
+          actionsLog.style.display = 'block';
+          const lastAction = task.actions[task.actions.length - 1];
+          actionsLog.textContent = `[${lastAction.tool}] ${lastAction.summary || lastAction.status}`;
+          document.getElementById('stepCount').textContent = `Step ${task.actions.length}`;
+        } else {
+          actionsLog.style.display = 'none';
+          document.getElementById('stepCount').textContent = `Step 0`;
+        }
+
+        // Update button label
+        const btnPause = document.getElementById('btnPause');
+        btnPause.textContent = task.state === 'paused' ? 'Resume' : 'Pause';
+      }
+
+      document.getElementById('btnPause').addEventListener('click', () => {
+        if (!currentTaskId || !window.taskOverlayApi) return;
+        const action = currentState === 'paused' ? 'resume' : 'pause';
+        window.taskOverlayApi.controlTask(currentTaskId, action);
+      });
+
+      document.getElementById('btnStop').addEventListener('click', () => {
+        if (!currentTaskId || !window.taskOverlayApi) return;
+        window.taskOverlayApi.controlTask(currentTaskId, 'stop');
+      });
+
+      document.getElementById('btnClose').addEventListener('click', () => {
+        if (window.taskOverlayApi) window.taskOverlayApi.close();
+      });
+
+      if (window.taskOverlayApi) {
+        window.taskOverlayApi.onTaskTelemetry((data) => {
+          if (data && data.task) {
+            updateTask(data.task);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
+

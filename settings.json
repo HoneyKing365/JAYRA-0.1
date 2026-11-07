@@ -1,0 +1,16 @@
+{
+  "autoStart": false,
+  "wakeWordEnabled": false,
+  "wakePhrase": "hey jayra",
+  "micDeviceId": "",
+  "sensitivity": 60,
+  "ttsVoice": "",
+  "speechRate": 1,
+  "speechPitch": 1,
+  "speechVolume": 1,
+  "networkAccessEnabled": true,
+  "animations": true,
+  "characterShine": 50,
+  "uiViewMode": "windowed",
+  "ttsProvider": "gemini"
+}

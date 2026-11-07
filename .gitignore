@@ -1,0 +1,14 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.myraa-data/
+cognition/*.json
+.env*
+!.env.example
+/secrets.json
+/secrets.v2.json
+/agent_build/
+/agent_dist/

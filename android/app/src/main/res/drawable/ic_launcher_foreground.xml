@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer Arc Ring -->
+    <path
+        android:strokeColor="#00F0FF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M 54,24 A 30,30 0 1,0 84,54" />
+    <path
+        android:strokeColor="#7000FF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M 54,84 A 30,30 0 0,0 24,54" />
+    <!-- Inner Core Circle -->
+    <path
+        android:fillColor="#00F0FF"
+        android:pathData="M 54,42 A 12,12 0 1,1 54,66 A 12,12 0 1,1 54,42" />
+    <!-- Center Dot -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 54,49 A 5,5 0 1,1 54,59 A 5,5 0 1,1 54,49" />
+</vector>

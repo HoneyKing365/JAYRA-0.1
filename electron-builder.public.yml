@@ -1,0 +1,58 @@
+# Public installer for sharing JAYRA (npm run dist:public).
+#
+# Differences from electron-builder.yml (the owner's personal build):
+#  - No bundled character model. The included models' licences forbid
+#    redistribution ("请勿二次配布"), so each user imports their own MMD
+#    character on first run (the app shows an "Import my character" screen).
+#  - Built with VITE_JAYRA_PUBLIC=1 so the app expects that.
+# API keys and personal data are never packaged by either build: they live in
+# %APPDATA%\JAYRA on each PC (keys DPAPI-encrypted per Windows user), and
+# .env / .myraa-data are not in `files`.
+appId: com.jayra.desktop
+productName: JAYRA
+copyright: Copyright © 2026 JAYRA
+afterPack: electron/afterPack.cjs
+
+directories:
+  output: release-public
+  buildResources: build
+
+asar: false
+
+files:
+  - electron/**/*
+  - dist/**/*
+  - assets/**/*
+  - "!assets/characters/**"
+  - build/icon.png
+  - build/icon.ico
+  - build/icon_vector.png
+  - build/icon_vector.ico
+  - package.json
+  - "!**/.env*"
+
+extraResources:
+  - from: agent_dist/myraa-agent
+    to: agent
+    filter: ["**/*"]
+
+win:
+  icon: build/icon_vector.ico
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: JAYRA
+  artifactName: ${productName}-Setup-${version}.${ext}
+
+portable:
+  artifactName: ${productName}-Portable-${version}.${ext}

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">JAYRA Companion</string>
+    <string name="accessibility_service_description">Enables JAYRA Desktop to interact with your phone screen, inspect app hierarchies, and execute automated actions upon authorized voice commands.</string>
+</resources>

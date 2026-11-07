@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14201d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>JAYRA Mobile Control</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <style>
+    :root{color-scheme:dark;--bg:#0c1110;--panel:#151d1a;--line:#2a3832;--text:#f0f5f1;--muted:#a4b4aa;--mint:#8ce0b4;--gold:#f1c678;--red:#ff9287;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#203a30 0,transparent 38%),var(--bg);color:var(--text);min-height:100svh}
+    main{width:min(100%,760px);margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(26px + env(safe-area-inset-bottom));display:grid;gap:14px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 10px}h1{font-size:22px;margin:0;letter-spacing:.04em}p{margin:0}.brand{color:var(--mint);font-size:11px;text-transform:uppercase;letter-spacing:.15em}
+    .status{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:#718079}.dot.on{background:var(--mint);box-shadow:0 0 14px #8ce0b477}.dot.off{background:var(--red)}
+    section{background:linear-gradient(145deg,#19231f,#111714);border:1px solid var(--line);border-radius:12px;padding:16px}h2{font-size:14px;text-transform:uppercase;letter-spacing:.09em;margin:0 0 13px;color:#d9e7df}
+    textarea,input,button{font:inherit}textarea{width:100%;min-height:116px;resize:vertical;background:#0d1411;color:var(--text);border:1px solid #34463d;border-radius:9px;padding:13px;line-height:1.45}textarea:focus,input:focus{outline:2px solid #8ce0b455;border-color:var(--mint)}
+    .row{display:flex;gap:9px;align-items:center;margin-top:10px}button,.upload-label{min-height:46px;border-radius:9px;padding:0 15px;border:1px solid #466353;background:#1d3429;color:var(--text);font-weight:650;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}button.primary{background:var(--mint);color:#10251b;border-color:var(--mint)}button.danger{background:#3b211f;border-color:#77413a;color:#ffd6d0}button:disabled{opacity:.5;cursor:wait}.row button{flex:1}
+    .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{padding:11px;background:#0d1411;border:1px solid #27362f;border-radius:8px}.metric span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;margin-top:5px;font-size:18px;font-variant-numeric:tabular-nums}
+    .notice{border-left:3px solid var(--mint);padding:8px 10px;background:#0d1411;border-radius:4px;color:#d8e5dc;font-size:13px;overflow-wrap:anywhere}.feed{display:grid;gap:7px;max-height:220px;overflow:auto}.approval{border-color:#705a31;background:linear-gradient(145deg,#302719,#181710)}.approval p{font-size:13px;line-height:1.45;color:#e7deca;overflow-wrap:anywhere}.approval .row{margin-top:13px}.approval .row button{flex:1}
+    input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.file-name{color:var(--muted);font-size:12px;overflow-wrap:anywhere}.hint{font-size:12px;color:var(--muted);margin-top:8px}.error{color:#ffb2a9;font-size:13px;white-space:pre-wrap}.hidden{display:none!important}
+    @media(min-width:620px){main{padding-left:24px;padding-right:24px;grid-template-columns:1fr 1fr;align-items:start}header,.command,.feed-wrap{grid-column:1/-1}.command{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.command section{height:100%}.feed{max-height:300px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><p class="brand">Local companion gateway</p><h1>JAYRA</h1></div>
+    <div class="status"><span id="statusDot" class="dot"></span><span id="connection">Connecting…</span></div>
+  </header>
+  <div class="command">
+    <section>
+      <h2>Send a command</h2>
+      <form id="commandForm">
+        <textarea id="prompt" maxlength="4000" placeholder="Ask JAYRA to do something on your desktop…" required></textarea>
+        <div class="row"><button id="send" class="primary" type="submit">Send to desktop</button><button id="voice" type="button" aria-label="Voice input">Voice input</button></div>
+        <p id="commandMessage" class="hint" aria-live="polite"></p>
+      </form>
+    </section>
+    <section>
+      <h2>Desktop status</h2>
+      <div class="metrics"><div class="metric"><span>CPU</span><strong id="cpu">—</strong></div><div class="metric"><span>Memory</span><strong id="memory">—</strong></div></div>
+      <p id="systemName" class="hint">JAYRA Desktop</p>
+      <div class="row"><label class="upload-label" for="upload">Upload a file</label><input id="upload" type="file"><span id="fileName" class="file-name">No file selected</span></div>
+      <p id="uploadMessage" class="hint" aria-live="polite"></p>
+    </section>
+  </div>
+  <section id="approval" class="approval hidden" aria-live="assertive">
+    <h2>Authorization required</h2><p id="approvalText"></p>
+    <div class="row"><button id="deny" class="danger" type="button">Deny</button><button id="approve" class="primary" type="button">Approve once</button></div>
+  </section>
+  <section class="feed-wrap"><h2>Live activity</h2><div id="feed" class="feed" aria-live="polite"></div></section>
+  <p id="fatalError" class="error hidden"></p>
+</main>
+<script>
+(() => {
+  const fragment = new URLSearchParams(location.hash.slice(1));
+  const token = fragment.get("token") || sessionStorage.getItem("jayraGatewayToken") || "";
+  if (fragment.has("token")) {
+    sessionStorage.setItem("jayraGatewayToken", token);
+    history.replaceState(null, "", location.pathname);
+  }
+  const authHeaders = { "X-JAYRA-Token": token };
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("/mobile-sw.js").catch(() => undefined);
+  const byId = (id) => document.getElementById(id);
+  let currentApproval = null;
+  let eventSource = null;
+  const showError = (message) => { byId("fatalError").textContent = message; byId("fatalError").classList.remove("hidden"); };
+  const addFeed = (text) => {
+    const item = document.createElement("div"); item.className = "notice"; item.textContent = text;
+    byId("feed").prepend(item); while (byId("feed").children.length > 30) byId("feed").lastElementChild.remove();
+  };
+  const request = async (path, options = {}) => {
+    const response = await fetch(path, { ...options, headers: { ...authHeaders, ...(options.headers || {}) } });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.detail || payload.error || `Request failed (${response.status})`);
+    return payload;
+  };
+  async function refreshStatus() {
+    try {
+      const data = await request("/gateway/status");
+      byId("statusDot").className = "dot on"; byId("connection").textContent = "Connected to JAYRA Desktop";
+      byId("systemName").textContent = data.system || data.name || "JAYRA Desktop";
+      const metrics = data.metrics || {};
+      const cpu = metrics.cpu?.usage_percent ?? metrics.cpu_percent ?? metrics.cpu_usage;
+      const memory = metrics.ram?.percent ?? metrics.memory_percent ?? metrics.ram_percent ?? metrics.memory_usage;
+      byId("cpu").textContent = typeof cpu === "number" ? `${Math.round(cpu)}%` : "Available";
+      byId("memory").textContent = typeof memory === "number" ? `${Math.round(memory)}%` : "Available";
+    } catch (error) {
+      byId("statusDot").className = "dot off"; byId("connection").textContent = "Desktop unavailable";
+      byId("cpu").textContent = "—"; byId("memory").textContent = "—";
+      if (error.message.includes("token")) showError("This pairing token is invalid. Re-scan the JAYRA desktop QR code.");
+    }
+  }
+  byId("commandForm").addEventListener("submit", async (event) => {
+    event.preventDefault(); const text = byId("prompt").value.trim(); if (!text) return;
+    byId("send").disabled = true; byId("commandMessage").textContent = "Sending…";
+    try {
+      const result = await request("/gateway/command", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt: text }) });
+      byId("commandMessage").textContent = result.taskId ? `Task started: ${result.taskId}` : "Command sent to JAYRA.";
+      addFeed(`Command sent: ${text}`); byId("prompt").value = "";
+    } catch (error) { byId("commandMessage").textContent = error.message; }
+    finally { byId("send").disabled = false; }
+  });
+  byId("voice").addEventListener("click", () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) { byId("commandMessage").textContent = "Voice input is not supported by this browser; type a command instead."; return; }
+    const recognition = new SpeechRecognition(); recognition.lang = navigator.language || "en-US"; recognition.interimResults = false;
+    recognition.onresult = (event) => { byId("prompt").value = event.results[0][0].transcript; byId("commandForm").requestSubmit(); };
+    recognition.onerror = () => { byId("commandMessage").textContent = "Could not access voice input."; };
+    byId("commandMessage").textContent = "Listening…"; recognition.start();
+  });
+  byId("upload").addEventListener("change", async (event) => {
+    const file = event.target.files[0]; if (!file) return;
+    byId("fileName").textContent = file.name; byId("uploadMessage").textContent = "Uploading…";
+    const form = new FormData(); form.append("file", file);
+    try {
+      const result = await request("/gateway/upload", { method: "POST", body: form });
+      byId("uploadMessage").innerHTML = "";
+      const downloadButton = document.createElement("button"); downloadButton.type = "button"; downloadButton.textContent = "Download uploaded file";
+      downloadButton.addEventListener("click", async () => {
+        try {
+          const response = await fetch(result.download, { headers: authHeaders }); if (!response.ok) throw new Error("Download failed.");
+          const objectUrl = URL.createObjectURL(await response.blob()); const anchor = document.createElement("a");
+          anchor.href = objectUrl; anchor.download = result.name; anchor.click(); URL.revokeObjectURL(objectUrl);
+        } catch (error) { byId("uploadMessage").textContent = error.message; }
+      });
+      byId("uploadMessage").append(downloadButton); addFeed(`Uploaded ${result.name} (${result.size} bytes)`);
+    } catch (error) { byId("uploadMessage").textContent = error.message; }
+    event.target.value = "";
+  });
+  async function answerApproval(approved) {
+    if (!currentApproval) return;
+    byId("approve").disabled = byId("deny").disabled = true;
+    try {
+      await request("/gateway/approval", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ confirmation_id: currentApproval, approved }) });
+      addFeed(approved ? "Approved action from mobile." : "Denied action from mobile.");
+      byId("approval").classList.add("hidden"); currentApproval = null;
+    } catch (error) { byId("approvalText").textContent += ` (${error.message})`; }
+    finally { byId("approve").disabled = byId("deny").disabled = false; }
+  }
+  byId("approve").addEventListener("click", () => answerApproval(true));
+  byId("deny").addEventListener("click", () => answerApproval(false));
+  function connectEvents() {
+    if (eventSource) eventSource.abort();
+    eventSource = new AbortController();
+    const controller = eventSource;
+    const consume = async () => {
+      while (!controller.signal.aborted) {
+        try {
+          const response = await fetch("/gateway/stream", { headers: authHeaders, signal: controller.signal });
+          if (!response.ok || !response.body) throw new Error("Live activity connection failed.");
+          const reader = response.body.getReader(); const decoder = new TextDecoder(); let buffer = "";
+          while (!controller.signal.aborted) {
+            const chunk = await reader.read(); if (chunk.done) break;
+            buffer += decoder.decode(chunk.value, { stream: true });
+            const frames = buffer.split("\n\n"); buffer = frames.pop() || "";
+            for (const frame of frames) {
+              const dataLine = frame.split("\n").find((line) => line.startsWith("data: "));
+              if (!dataLine) continue;
+              let event; try { event = JSON.parse(dataLine.slice(6)); } catch { continue; }
+      if (event.type === "confirmation.requested" && event.payload?.id?.startsWith("cognition:")) {
+        currentApproval = event.payload.id.slice("cognition:".length);
+        byId("approvalText").textContent = `${event.payload.title}: ${event.payload.description} ${JSON.stringify(event.payload.details || {})}`;
+        byId("approval").classList.remove("hidden");
+      } else if (event.type === "confirmation.resolved" && currentApproval && event.payload?.id === `cognition:${currentApproval}`) {
+        byId("approval").classList.add("hidden"); currentApproval = null;
+      } else if (["task.updated", "task.finished", "notification", "react.stage"].includes(event.type)) {
+        const info = event.payload?.goal || event.payload?.text || event.payload?.status || event.type;
+        addFeed(String(info).slice(0, 500));
+      }
+            }
+          }
+        } catch (error) {
+          if (controller.signal.aborted) return;
+          byId("statusDot").className = "dot off"; byId("connection").textContent = "Reconnecting…";
+          await new Promise((resolve) => setTimeout(resolve, 2500));
+        }
+      }
+    };
+    void consume();
+  }
+  if (!token) showError("No pairing token found. Open this page from the QR code shown in JAYRA desktop.");
+  refreshStatus(); connectEvents(); setInterval(refreshStatus, 10_000);
+})();
+</script>
+</body>
+</html>

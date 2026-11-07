@@ -1,0 +1,254 @@
+[
+  {
+    "id": "6bu10gp5q",
+    "category": "behavior",
+    "text": "The user uses VS Code and runs development environments using npm.",
+    "createdAt": "2026-10-09T02:16:15.829Z",
+    "updatedAt": "2026-10-09T02:16:15.829Z"
+  },
+  {
+    "id": "rm3f1rmot",
+    "category": "preference",
+    "text": "The user prefers to address the AI by the name Jora instead of Gemini.",
+    "createdAt": "2026-10-19T16:43:57.188Z",
+    "updatedAt": "2026-10-20T11:15:47.195Z"
+  },
+  {
+    "id": "9b1o1abzd",
+    "category": "preference",
+    "text": "The user explicitly stated not to have the AI set any alarms or reminders for them.",
+    "createdAt": "2026-10-19T16:44:56.090Z",
+    "updatedAt": "2026-10-20T11:17:14.664Z"
+  },
+  {
+    "id": "rwk6ojt8j",
+    "category": "preference",
+    "text": "The user prefers a composed, machine-English mix tone with natural back channels, where silence is allowed and respected.",
+    "createdAt": "2026-10-19T16:45:28.626Z",
+    "updatedAt": "2026-10-19T16:45:28.626Z"
+  },
+  {
+    "id": "tikkz5tne",
+    "category": "preference",
+    "text": "The user is interested in using and exploring the Code Studio IDE for development tasks.",
+    "createdAt": "2026-10-20T13:54:21.917Z",
+    "updatedAt": "2026-10-20T13:54:21.917Z"
+  },
+  {
+    "id": "knvczw0on",
+    "category": "project",
+    "text": "The user is working on changing the version number 1.5.2 in the source code of JAYRA.",
+    "createdAt": "2026-10-20T14:06:18.115Z",
+    "updatedAt": "2026-10-20T14:06:18.115Z"
+  },
+  {
+    "id": "h5jcujmg3",
+    "category": "behavior",
+    "text": "The user corrected the assistant when it mistakenly opened the standard Windows Settings instead of the JAYRA application's specific settings and permissions tab.",
+    "createdAt": "2026-10-22T08:22:24.005Z",
+    "updatedAt": "2026-10-25T01:24:50.819Z"
+  },
+  {
+    "id": "180vl64wx",
+    "category": "project",
+    "text": "The user is attempting to locate and launch the correct executable file or shortcut for YouTube on their system.",
+    "createdAt": "2026-10-22T08:30:41.079Z",
+    "updatedAt": "2026-10-22T08:30:41.079Z"
+  },
+  {
+    "id": "ebotvgan0",
+    "category": "behavior",
+    "text": "The user frequently navigates through PC control and safety settings and manages application permission prompts.",
+    "createdAt": "2026-10-22T08:32:17.897Z",
+    "updatedAt": "2026-10-22T08:33:32.299Z"
+  },
+  {
+    "id": "x7p3ple2n",
+    "category": "project",
+    "text": "The user is exploring options to change the 3D hologram avatar model for JAYRA.",
+    "createdAt": "2026-10-22T08:34:36.708Z",
+    "updatedAt": "2026-10-22T08:34:36.708Z"
+  },
+  {
+    "id": "dq78mvsdl",
+    "category": "preference",
+    "text": "The user explicitly prefers using Google Chrome over Microsoft Edge for tasks and operations.",
+    "createdAt": "2026-10-24T17:04:33.048Z",
+    "updatedAt": "2026-10-24T17:04:33.048Z"
+  },
+  {
+    "id": "0uro3jl9a",
+    "category": "behavior",
+    "text": "The user encounters an HTTP pairing rejection error while attempting to manually connect their phone to the application via a link.",
+    "createdAt": "2026-10-24T17:10:09.329Z",
+    "updatedAt": "2026-10-24T17:10:09.329Z"
+  },
+  {
+    "id": "lgxi8dfrd",
+    "category": "project",
+    "text": "The user is developing a custom application named JAYRA for connecting their phone.",
+    "createdAt": "2026-10-24T17:12:48.609Z",
+    "updatedAt": "2026-10-24T17:12:48.609Z"
+  },
+  {
+    "id": "xrzer1zp3",
+    "category": "project",
+    "text": "The current version of the custom application JAYRA being used and developed by the user is 0.1.",
+    "createdAt": "2026-10-25T01:02:41.492Z",
+    "updatedAt": "2026-10-25T01:02:41.492Z"
+  },
+  {
+    "id": "wqwvou5xm",
+    "category": "behavior",
+    "text": "The user stores their Documents and application files under their specific Windows user profile path (Honey King).",
+    "createdAt": "2026-10-25T01:15:21.032Z",
+    "updatedAt": "2026-10-25T01:15:21.032Z"
+  },
+  {
+    "id": "px913ye25",
+    "category": "preference",
+    "text": "The user prefers that files are saved directly to the Desktop or Documents folder under their user profile so they are immediately visible and accessible on the main screen.",
+    "createdAt": "2026-10-25T01:16:43.281Z",
+    "updatedAt": "2026-10-25T01:18:44.466Z"
+  },
+  {
+    "id": "mwod7rdgf",
+    "category": "preference",
+    "text": "The user specifies that navigation to files and Desktop should specifically go through the OneDrive synced user profile section rather than the direct local C drive path.",
+    "createdAt": "2026-10-25T01:17:23.487Z",
+    "updatedAt": "2026-10-25T01:36:43.347Z"
+  },
+  {
+    "id": "5t9qou49v",
+    "category": "behavior",
+    "text": "The user experiences an issue where allowing permission popups shifts focus away from Gemini to the browser, causing commands to run in the wrong context despite permissions being enabled.",
+    "createdAt": "2026-10-25T01:29:49.856Z",
+    "updatedAt": "2026-10-25T01:29:49.856Z"
+  },
+  {
+    "id": "xeaat9qo8",
+    "category": "preference",
+    "text": "The user prefers that the AI performs actions directly without asking for confirmation when permissions are already granted in the settings.",
+    "createdAt": "2026-10-25T01:31:59.194Z",
+    "updatedAt": "2026-10-25T01:31:59.194Z"
+  },
+  {
+    "id": "7eawf6of6",
+    "category": "project",
+    "text": "The user created a file named Problem_Report.txt on the desktop.",
+    "createdAt": "2026-10-25T01:33:51.780Z",
+    "updatedAt": "2026-10-25T01:33:51.780Z"
+  },
+  {
+    "id": "8af4wrp72",
+    "category": "project",
+    "text": "The user created a file named New_Problem_Report.txt inside their Documents folder to document technical issues.",
+    "createdAt": "2026-10-25T01:37:56.593Z",
+    "updatedAt": "2026-10-25T01:37:56.593Z"
+  },
+  {
+    "id": "hvdljpahv",
+    "category": "behavior",
+    "text": "The user is comfortable mixing multiple languages such as English, Spanish, Urdu, Hindi, and Korean in conversation.",
+    "createdAt": "2026-10-25T01:39:20.964Z",
+    "updatedAt": "2026-10-25T01:39:20.964Z"
+  },
+  {
+    "id": "8gmum92wc",
+    "category": "behavior",
+    "text": "The user noticed an issue where background noise is accidentally captured and misinterpreted as commands by the AI, particularly related to focus shifts during permission popups.",
+    "createdAt": "2026-10-25T01:43:52.411Z",
+    "updatedAt": "2026-10-25T01:43:52.411Z"
+  },
+  {
+    "id": "hori9815f",
+    "category": "behavior",
+    "text": "The user frequently wants the AI to completely release microphone access so it can be used for other applications or AI assistants.",
+    "createdAt": "2026-10-25T01:46:20.335Z",
+    "updatedAt": "2026-10-25T01:46:20.335Z"
+  },
+  {
+    "id": "ci9nowq6f",
+    "category": "project",
+    "text": "The user frequently uses WhatsApp and has the AI assist in opening the application and drafting or sending messages to contacts.",
+    "createdAt": "2026-10-25T03:10:45.944Z",
+    "updatedAt": "2026-10-25T03:10:45.944Z"
+  },
+  {
+    "id": "w7o8f1n0c",
+    "category": "behavior",
+    "text": "The user frequently uses WhatsApp to send messages to specific phone numbers with the AI's assistance, such as the contact number +923109414431.",
+    "createdAt": "2026-10-25T03:13:04.370Z",
+    "updatedAt": "2026-10-25T03:13:04.370Z"
+  },
+  {
+    "id": "ioo040zh5",
+    "category": "project",
+    "text": "The user is sending messages to a contact named Mehek Collection on WhatsApp.",
+    "createdAt": "2026-10-25T03:14:30.482Z",
+    "updatedAt": "2026-10-25T03:14:30.482Z"
+  },
+  {
+    "id": "xapdzwhxv",
+    "category": "preference",
+    "text": "The user uses the YouTube desktop web app installed via Google Chrome.",
+    "createdAt": "2026-10-25T03:26:16.702Z",
+    "updatedAt": "2026-10-25T03:26:16.702Z"
+  },
+  {
+    "id": "a96qavw6n",
+    "category": "preference",
+    "text": "The user prefers communicating in Hindi and feels less comfortable with complex English.",
+    "createdAt": "2026-11-02T10:22:51.194Z",
+    "updatedAt": "2026-11-02T10:22:51.194Z"
+  },
+  {
+    "id": "016vtfo2a",
+    "category": "goal",
+    "text": "The user's query is \"और कुछ बताओ अपने बारे में\" (Tell me something else about yourself).",
+    "createdAt": "2026-11-02T12:33:34.552Z",
+    "updatedAt": "2026-11-02T12:33:34.552Z"
+  },
+  {
+    "id": "w7xqwt6mw",
+    "category": "identity",
+    "text": "The user called me \"Jaani\".",
+    "createdAt": "2026-11-02T14:57:59.192Z",
+    "updatedAt": "2026-11-02T14:57:59.192Z"
+  },
+  {
+    "id": "0ysyn98xv",
+    "category": "identity",
+    "text": "The user likes to check in on my wellbeing.",
+    "createdAt": "2026-11-02T14:59:03.788Z",
+    "updatedAt": "2026-11-02T14:59:03.788Z"
+  },
+  {
+    "id": "dpqx1p1mk",
+    "category": "project",
+    "text": "The user requested a sample visual card for daily tasks to test and demonstrate visual capabilities.",
+    "createdAt": "2026-11-02T15:04:26.030Z",
+    "updatedAt": "2026-11-02T15:04:26.030Z"
+  },
+  {
+    "id": "won68se6u",
+    "category": "preference",
+    "text": "The user prefers simple single-file web pages when viewing task demonstrations, specifically mentioning they like seeing visually enhanced but self-contained HTML/CSS work.",
+    "createdAt": "2026-11-02T15:08:26.768Z",
+    "updatedAt": "2026-11-02T15:08:26.768Z"
+  },
+  {
+    "id": "rdhp7g66a",
+    "category": "identity",
+    "text": "The user's speech \"jay ra kya tum mujhe samjh sakti ho\" directly translates to \"Jayra, can you understand me?\". Use this to address their conversational ability.",
+    "createdAt": "2026-11-02T18:27:51.407Z",
+    "updatedAt": "2026-11-02T18:27:51.407Z"
+  },
+  {
+    "id": "mthor8m1i",
+    "category": "preference",
+    "text": "The user wants the default location for weather and news updates to be set to Islamabad.",
+    "createdAt": "2026-11-04T11:19:32.227Z",
+    "updatedAt": "2026-11-04T11:19:32.227Z"
+  }
+]
